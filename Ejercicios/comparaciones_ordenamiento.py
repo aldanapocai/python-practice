@@ -7,6 +7,8 @@ Created on Sun Oct 25 15:30:29 2020.
 
 import random
 import copy
+from matplotlib import pyplot as plt
+import numpy as np
 
 #%%
 
@@ -72,7 +74,7 @@ def ord_insercion(lista):
         # al de la posición i, reubicarlo dentro del segmento [0:i]
         if lista[i + 1] < lista[i]:
             reubicar(lista, i + 1)
-            comp +=1
+        comp +=1
         # print("DEBUG: ", lista)
     return comp
 
@@ -107,7 +109,7 @@ def ord_burbujeo(lista):
         for i in range(len(lista)-m):
             if lista[i] > lista[i+1]: #La cant de intercambios sera <= len(lista), siendo = en el peor caso.  
                 lista[i], lista[i+1] = lista[i+1], lista[i]
-                comp +=1
+            comp +=1
     return comp    
 
 
@@ -125,28 +127,61 @@ def ord_burbujeo(lista):
 # comp_insercion = ord_insercion(a_insercion)
 # comp_burbujeo = ord_burbujeo(a_burbujeo)
 
-#Experimento con 100 listas de largo 10
-comp_seleccion = []
-comp_insercion = []
-comp_burbujeo = []
-N = 100 #Cantidad de veces a realizar el experimento
-for i in range(N):
-    list = generar_lista(10)
+#11.4 Experimento con 100 listas de largo 10
+# comp_seleccion = []
+# comp_insercion = []
+# comp_burbujeo = []
+# N = 100 #Cantidad de veces a realizar el experimento
+# for i in range(N):
+#     list = generar_lista(10)
+#     list_seleccion = copy.deepcopy(list)
+#     list_insercion = copy.deepcopy(list)
+#     list_burbujeo = copy.deepcopy(list)
+    
+#     comp_seleccion.append(ord_seleccion(list_seleccion))
+#     comp_insercion.append(ord_insercion(list_insercion))
+#     comp_burbujeo.append(ord_burbujeo(list_burbujeo))
+    
+
+# prom_seleccion = sum(comp_seleccion)/N
+# prom_insercion = sum(comp_insercion)/N    
+# prom_burbujeo = sum(comp_burbujeo)/N
+    
+# print("COMPARACION DE METODOS DE ORDENAMIENTO - PROMEDIOS")
+# print("---------------------------------------------------")
+# print("SELECCION       INSERCION       BURBUJEO")
+# print(f'   {prom_seleccion}           {prom_insercion}            {prom_burbujeo}')
+
+
+#%%11.5 COMPARACION GRAFICAMENTE
+
+comparaciones_seleccion = np.empty(256, dtype = np.int64)
+comparaciones_insercion = np.empty(256, dtype = np.int64)
+comparaciones_burbujeo = np.empty(256, dtype = np.int64)
+
+for i in range(1,257):
+    list = generar_lista(i)
     list_seleccion = copy.deepcopy(list)
     list_insercion = copy.deepcopy(list)
     list_burbujeo = copy.deepcopy(list)
     
-    comp_seleccion.append(ord_seleccion(list_seleccion))
-    comp_insercion.append(ord_insercion(list_insercion))
-    comp_burbujeo.append(ord_burbujeo(list_burbujeo))
     
+    comparaciones_seleccion[i-1] = ord_seleccion(list_seleccion)
+    comparaciones_insercion[i-1] = ord_insercion(list_insercion)
+    comparaciones_burbujeo[i-1] = ord_burbujeo(list_burbujeo)  
+    
+largo_lista = np.arange(1,257)
 
-prom_seleccion = sum(comp_seleccion)/N
-prom_insercion = sum(comp_insercion)/N    
-prom_burbujeo = sum(comp_burbujeo)/N
+#Graficos
+
+plt.plot(largo_lista, comparaciones_seleccion, label="Seleccion")
+plt.plot(largo_lista, comparaciones_insercion, label="Insercion")
+plt.plot(largo_lista, comparaciones_burbujeo, label ="Burujeo")
+plt.xlabel("Cantidad de elementos en la lista")
+plt.ylabel("Comparaciones realizadas")
+plt.title("COMPARACION ORDENAMIENTOS DE LISTAS")
+plt.legend()
+
+
     
-print("COMPARACION DE METODOS DE ORDENAMIENTO - PROMEDIOS")
-print("---------------------------------------------------")
-print("SELECCION       INSERCION       BURBUJEO")
-print(f'   {prom_seleccion}           {prom_insercion}            {prom_burbujeo}')
 
