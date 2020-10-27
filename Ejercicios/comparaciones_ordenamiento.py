@@ -182,6 +182,7 @@ plt.ylabel("Comparaciones realizadas")
 plt.title("COMPARACION ORDENAMIENTOS DE LISTAS")
 plt.legend()
 
+<<<<<<< HEAD
 #%% 11.7 Merge Sort
 
 def merge(izq, der, comp):
@@ -221,6 +222,8 @@ lista = [6, 7, -1, 0, 5, 2, 3, 8]
 
 lista_nueva, comparaciones = merge_sort(lista)
 
+=======
+>>>>>>> 12668302a2ea93517bde4d8cdb01759865f8b743
 
     
 
