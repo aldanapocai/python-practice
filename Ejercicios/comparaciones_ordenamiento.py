@@ -112,6 +112,43 @@ def ord_burbujeo(lista):
             comp +=1
     return comp    
 
+#%% 11.7 Merge Sort
+
+def merge(izq, der, comp):
+    """Recibe dos listas ordenadas y devuelve una nueva al intercalarlas de forma ordenada."""
+    resultado = []
+    i = j = 0
+    while( i<len(izq) and j<len(der)):
+        comp +=1
+        if (izq[i] < der[j]):
+            resultado.append(izq[i])
+            i +=1
+        else:
+            resultado.append(der[j])
+            j +=1
+    resultado += izq[i:]
+    resultado += der[j:]
+    return resultado, comp
+
+
+
+
+def merge_sort(lista, comparaciones = 0):
+    """Ordena una lista por el metodo merg sort."""    
+    comparaciones +=1
+    if len(lista) < 2:
+        return lista, comparaciones
+    else:
+        medio = len(lista) // 2
+        izq, c1 = merge_sort(lista[:medio])
+        der, c2 = merge_sort(lista[medio:])
+        comparaciones += c1 + c2
+    lista_nueva, comparaciones = merge(izq, der, comparaciones)
+    return lista_nueva, comparaciones
+
+#test
+# lista = [6, 7, -1, 0, 5, 2, 3, 8]
+# lista_nueva, comparaciones = merge_sort(lista)
 
 #%% COMPARACIONES ENTRE METODOS
 
@@ -158,17 +195,19 @@ def ord_burbujeo(lista):
 comparaciones_seleccion = np.empty(256, dtype = np.int64)
 comparaciones_insercion = np.empty(256, dtype = np.int64)
 comparaciones_burbujeo = np.empty(256, dtype = np.int64)
+comparaciones_merge_sort = np.empty(256, dtype = np.int64)
 
-for i in range(1,257):
-    list = generar_lista(i)
+for i in range(256):
+    list = generar_lista(i+1)
     list_seleccion = copy.deepcopy(list)
     list_insercion = copy.deepcopy(list)
     list_burbujeo = copy.deepcopy(list)
     
     
-    comparaciones_seleccion[i-1] = ord_seleccion(list_seleccion)
-    comparaciones_insercion[i-1] = ord_insercion(list_insercion)
-    comparaciones_burbujeo[i-1] = ord_burbujeo(list_burbujeo)  
+    comparaciones_seleccion[i] = ord_seleccion(list_seleccion)
+    comparaciones_insercion[i] = ord_insercion(list_insercion)
+    comparaciones_burbujeo[i] = ord_burbujeo(list_burbujeo)
+    lista_nueva, comparaciones_merge_sort[i] = merge_sort(list) 
     
 largo_lista = np.arange(1,257)
 
@@ -177,53 +216,16 @@ largo_lista = np.arange(1,257)
 plt.plot(largo_lista, comparaciones_seleccion, label="Seleccion")
 plt.plot(largo_lista, comparaciones_insercion, label="Insercion")
 plt.plot(largo_lista, comparaciones_burbujeo, label ="Burujeo")
+plt.plot(largo_lista, comparaciones_merge_sort, label = "Merge Sort")
 plt.xlabel("Cantidad de elementos en la lista")
 plt.ylabel("Comparaciones realizadas")
 plt.title("COMPARACION ORDENAMIENTOS DE LISTAS")
 plt.legend()
 
-<<<<<<< HEAD
-#%% 11.7 Merge Sort
-
-def merge(izq, der, comp):
-    """Recibe dos listas ordenadas y devuelve una nueva al intercalarlas de forma ordenada."""
-    resultado = []
-    i = j = 0
-    while( i<len(izq) and j<len(der)):
-        comp +=1
-        if (izq[i] < der[j]):
-            resultado.append(izq[i])
-            i +=1
-        else:
-            resultado.append(der[j])
-            j +=1
-    resultado += izq[i:]
-    resultado += der[j:]
-    return resultado, comp
 
 
 
 
-def merge_sort(lista, comparaciones = 0):
-    """Ordena una lista por el metodo merg sort."""    
-    comparaciones +=1
-    if len(lista) < 2:
-        return lista, comparaciones
-    else:
-        medio = len(lista) // 2
-        izq, c1 = merge_sort(lista[:medio])
-        der, c2 = merge_sort(lista[medio:])
-        comparaciones += c1 + c2
-    lista_nueva, comparaciones = merge(izq, der, comparaciones)
-    return lista_nueva, comparaciones
-
-lista = [6, 7, -1, 0, 5, 2, 3, 8]
-
-
-lista_nueva, comparaciones = merge_sort(lista)
-
-=======
->>>>>>> 12668302a2ea93517bde4d8cdb01759865f8b743
 
     
 
