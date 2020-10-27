@@ -182,6 +182,45 @@ plt.ylabel("Comparaciones realizadas")
 plt.title("COMPARACION ORDENAMIENTOS DE LISTAS")
 plt.legend()
 
+#%% 11.7 Merge Sort
+
+def merge(izq, der, comp):
+    """Recibe dos listas ordenadas y devuelve una nueva al intercalarlas de forma ordenada."""
+    resultado = []
+    i = j = 0
+    while( i<len(izq) and j<len(der)):
+        comp +=1
+        if (izq[i] < der[j]):
+            resultado.append(izq[i])
+            i +=1
+        else:
+            resultado.append(der[j])
+            j +=1
+    resultado += izq[i:]
+    resultado += der[j:]
+    return resultado, comp
+
+
+
+
+def merge_sort(lista, comparaciones = 0):
+    """Ordena una lista por el metodo merg sort."""    
+    comparaciones +=1
+    if len(lista) < 2:
+        return lista, comparaciones
+    else:
+        medio = len(lista) // 2
+        izq, c1 = merge_sort(lista[:medio])
+        der, c2 = merge_sort(lista[medio:])
+        comparaciones += c1 + c2
+    lista_nueva, comparaciones = merge(izq, der, comparaciones)
+    return lista_nueva, comparaciones
+
+lista = [6, 7, -1, 0, 5, 2, 3, 8]
+
+
+lista_nueva, comparaciones = merge_sort(lista)
+
 
     
 
