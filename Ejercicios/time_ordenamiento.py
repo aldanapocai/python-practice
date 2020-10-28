@@ -87,7 +87,7 @@ def reubicar(lista, p):
 #%% ORDENAMIENTO POR BURBUJEO
 def ord_burbujeo(lista):
     """
-    Ordena una lista de elementos según el método de inserción.
+    Ordena una lista de elementos según el método de burbujeo.
     
     Pre: los elementos de la lista deben ser comparables.
     Post: la lista está ordenada.
@@ -150,7 +150,7 @@ def generar_listas(Nmax):
 def experimento_timeit_ordenamiento(metodo,listas, num):
     """
     Realiza un experimento usando timeit para evaluar el método
-    de selección para ordenamiento de listas
+    ingresado de ordenamiento de listas
     con las listas pasadas como entrada
     y devuelve los tiempos de ejecución para cada lista
     en un vector.
@@ -186,6 +186,7 @@ listas_seleccion = generar_listas(Nmax)
 listas_insercion = copy.deepcopy(listas_seleccion)
 listas_burbujeo = copy.deepcopy(listas_seleccion)
 listas_merge_sort = copy.deepcopy(listas_seleccion)
+
 #Coord x
 largo_lista = np.arange( Nmax)
 #Coord y
@@ -195,7 +196,6 @@ tiempos_burbujeo = experimento_timeit_ordenamiento(ord_burbujeo, listas_burbujeo
 tiempos_merge_sort = experimento_timeit_ordenamiento(merge_sort, listas_merge_sort, 100)
 
 #Graficos
-
 plt.plot(largo_lista, tiempos_seleccion, label = "Seleccion")
 plt.plot(largo_lista, tiempos_insercion, label="Insercion")
 plt.plot(largo_lista, tiempos_burbujeo, label ="Burujeo")
