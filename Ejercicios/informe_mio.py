@@ -46,10 +46,10 @@ def hacer_informe(lista_camion, precios):
     '''
     informe = []
     for n in lista_camion:
-        articulo = n['nombre']
+        articulo = n.nombre
         precio_v = precios[articulo]
-        cambio = precio_v - n['precio']
-        info = (articulo, n['cajones'], precio_v, cambio )
+        cambio = precio_v - n.precio
+        info = (articulo, n.cajones, precio_v, cambio )
         informe.append(info)
     return informe
 
@@ -64,18 +64,22 @@ def imprimir_informe(informe):
          print(f'{nombre:>10s} {cajones:>10d} {precio_v:>10} {cambio:>10.2f}')
 
 def informe_camion(nombre_archivo_camion, nombre_archivo_precios):
-    camion = parse_csv(nombre_archivo_camion, types = [str, int, float])
-    precios = dict(parse_csv(nombre_archivo_precios, types = [str,float], has_headers=False))
+    camion = leer_camion(nombre_archivo_camion)
+    precios = leer_precios(nombre_archivo_precios)
     informe = hacer_informe(camion, precios)
     imprimir_informe(informe)
 
-
-def main(argv):
-    if len(argv) != 3:
-        raise SystemExit(f'Uso adecuado: {argv[0]} ' 'archivo_camion archivo_precios')
-    informe_camion(argv[1], argv[2])
+#%%
+def main(arg):
+    if len(arg) < 3:
+        raise SystemExit(f'Uso adecuado: {arg[0]} ' 'archivo_camion archivo_precios')
+    elif len(arg) == 3:
+        informe_camion(arg[1], arg[2])
+    elif len(arg) == 4:
+        informe_camion(arg[1], arg[2], arg[3])
   
-    
+   
+#%%
 if __name__ == '__main__':
     import sys
     main(sys.argv)
