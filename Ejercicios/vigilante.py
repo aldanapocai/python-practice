@@ -22,11 +22,15 @@ def vigilar(filename):
             yield line
 
 if __name__ == '__main__':
+    import informe
+    camion = informe.leer_camion('Data/camion.csv')
+    
     for line in vigilar('Data/mercadolog.csv'):
         fields = line.split(',')
         nombre = fields[0].strip('"')
         precio = float(fields[1])
         volumen = int(fields[2])
-        if volumen > 1000:
+        if nombre in camion:
             print(f'{nombre:>10s} {precio:>10.2f} {volumen:>10d}')
+
         
