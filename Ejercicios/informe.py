@@ -1,8 +1,10 @@
 # informe.py
 
 import fileparse
-import lote
+from lote import Lote
 import formato_tabla
+from camion import Camion
+
 
 #%%
 def leer_camion(nom_archivo):
@@ -13,8 +15,9 @@ def leer_camion(nom_archivo):
     '''
     with open(nom_archivo) as lines:
         camion_dicts = fileparse.parse_csv(lines, select=['nombre','cajones','precio'], types=[str,int,float])
-    #lo devuelve como lista de elementos de la clase lote
-    return [lote.Lote(d['nombre'], d['cajones'], d['precio']) for d in camion_dicts]
+    #lo devuelve como un objeto Camion con elementos de la clase lote
+    camion = [Lote(d['nombre'], d['cajones'], d['precio']) for d in camion_dicts]
+    return Camion(camion)
     
 def leer_precios(nom_archivo):
     '''

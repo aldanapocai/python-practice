@@ -23,7 +23,7 @@ def leer_camion(nom_archivo):
     with open(nom_archivo) as lines:
         camion_dicts = parse_csv(lines, select=['nombre','cajones','precio'], 
                                  types=[str,int,float])
-    #lo devuelve como lista de elementos de la clase lote
+    #lo devuelve como un objeto Camion con elementos de la clase lote
     camion = [Lote(d['nombre'], d['cajones'], d['precio']) for d in camion_dicts]
     return Camion(camion)
     
