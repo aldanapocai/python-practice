@@ -6,18 +6,13 @@ Created on Mon Sep 21 19:40:40 2020
 
 @author: Aldana_Pocai
 
-En el interactivo ingresar  
-import informe
-
-with open('Data/camion.csv') as f1:
-   with open('Data/precios.csv') as f2:
-       informe.main(['informe.py', f1, f2])
 
 
 """
 
 from fileparse import parse_csv
-import lote
+from lote import Lote
+from camion import Camion
 
 def leer_camion(nom_archivo):
     '''
@@ -26,9 +21,12 @@ def leer_camion(nom_archivo):
     nombre, cajones, precio.
     '''
     with open(nom_archivo) as lines:
-        camion_dicts = parse_csv(lines, select=['nombre','cajones','precio'], types=[str,int,float])
+        camion_dicts = parse_csv(lines, select=['nombre','cajones','precio'], 
+                                 types=[str,int,float])
     #lo devuelve como lista de elementos de la clase lote
-    return [lote.Lote(d['nombre'], d['cajones'], d['precio']) for d in camion_dicts]
+    camion = [Lote(d['nombre'], d['cajones'], d['precio']) for d in camion_dicts]
+    return Camion(camion)
+    
     
 def leer_precios(nom_archivo):
     '''
