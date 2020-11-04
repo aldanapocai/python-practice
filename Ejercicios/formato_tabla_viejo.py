@@ -26,7 +26,7 @@ class FormatoTablaTXT(FormatoTabla):
 
     def fila(self, data_fila):
         for d in data_fila:
-            print(f'{d:>10}', end = " ")
+            print(f'{d:>10s}', end = " ")
         print()    
         
 class FormatoTablaCSV(FormatoTabla):
@@ -36,7 +36,6 @@ class FormatoTablaCSV(FormatoTabla):
         print(','.join(headers))
     
     def fila(self, rowdata):
-        rowdata = [ str(value) for value in rowdata]
         print(','.join(rowdata))
         
 class FormatoTablaHTML(FormatoTabla):
